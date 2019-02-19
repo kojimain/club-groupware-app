@@ -1,0 +1,20 @@
+language: php
+php:
+  - '7.2'
+
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install
+script:
+  - vendor/bin/phpunit
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: ExROwUh3n4d52p4JTp+QPiFzF4b0ORY3zh98AbBVdt430oxzkyfohiAjHesDTpRNSfGH4rjQcCcpLvBk15JtlsOPtewuiWrYI/fGvjLajOrztjEqtzXuRaAT+Rghy5yVCSHaljfiYYWC3VVS6X4/nJicLNc1mrWYfc6uTmwkEBibJNt46TWYPgP9U+AqT0wHpubOdwOanrUT3xbDHY9CCrBITPlXh/N0PP6w2QbX1DMNmLFe7jGmts5owfFrmuaCj2WHictKdf7ekoMQ+II/vqN1bgqUywipUIEMFtUUw+4XudbEv8WkRviIRnZbcDu/7yWgbc4yJgo4HiBrSgSDWdrYkO/Y64I/60yxSnneebU4POieVTsory1HyFsREPaKF+H6BcdbJG5TN2F2GZ1HhHA89YESTePG4QXShSaob6B1uQPWQFqWB5tmiCqCSmklmz7D431/bjldIJyUasNID3Ml3m4B/8Vx2PXm0fp/Scg8yMyi06JBasS56nCN1ArNqNq5CIo9HhyK09mKiJHfY9cyrWkZw1KCfEMY04urt9z7q7LCrtzpZHIbU4Q1QaSNKJ6MsmEmMHfuNIfO5mzmjV2x/Ah7l40aHsGxNcq9YRrYQEJ7T282kBIHBQ393Zx/Bx/F/QP4Wekvy+TxUGTYjnnLmh72nr5anJOdSsrJ8Eo=
+  app:
+    staging: club-groupware-app-staging
+    master: club-groupware-app
+  on:
+    repo: kojimain/club-groupware-app
