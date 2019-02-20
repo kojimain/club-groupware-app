@@ -11,5 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+// アセットパイプライン
+mix
+    .js('resources/js/app.js', 'public/js')
+
+// `$ yarn production` のときだけバージョニング
+if (mix.config.production) {
+    mix.version();
+}
