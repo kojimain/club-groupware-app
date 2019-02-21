@@ -8,7 +8,7 @@ cache:
 services:
   - postgresql
 before_script:
-  - psql -c 'create database club_groupware;' -U postgres
+  - psql -c 'create database club_groupware_test;' -U postgres
   - cp .env.travis .env
   - composer self-update
   - composer install
