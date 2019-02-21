@@ -5,10 +5,14 @@ cache:
   directories:
   - $HOME/.composer/cache
 
+services:
+  - postgresql
 before_script:
+  - psql -c 'create database club_groupware;' -U postgres
   - cp .env.travis .env
   - composer self-update
   - composer install
+  - php artisan migrate
 script:
   - vendor/bin/phpunit
 
