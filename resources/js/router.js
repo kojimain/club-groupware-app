@@ -15,55 +15,55 @@ import ClubsIdEventsIdEditPage from "./pages/clubs/_id/events/_id/edit";
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: "/",
-        component: AppLayout,
-        children: [
-            {
-                path: "",
-                component: IndexPage
-            },
-            {
-                path: "edit",
-                component: EditPage
-            },
-            {
-                path: "clubs/new",
-                component: ClubsNewPage
-            }
-        ]
-    },
-    {
-        path: "/clubs/:club_id",
-        component: ClubsIdLayout,
-        children: [
-            {
-                path: "",
-                component: ClubsIdIndexPage
-            },
-            {
-                path: "edit",
-                component: ClubsIdEditPage
-            },
-            {
-                path: "members",
-                component: ClubsIdMembersIndexPage
-            },
-            {
-                path: "events/new",
-                component: ClubsIdEventsNewPage
-            },
-            {
-                path: "events/:event_id/edit",
-                component: ClubsIdEventsIdEditPage
-            }
-        ]
-    }
+  {
+    path: "/",
+    component: AppLayout,
+    children: [
+      {
+        path: "",
+        component: IndexPage
+      },
+      {
+        path: "edit",
+        component: EditPage
+      },
+      {
+        path: "clubs/new",
+        component: ClubsNewPage
+      }
+    ]
+  },
+  {
+    path: "/clubs/:club_id",
+    component: ClubsIdLayout,
+    children: [
+      {
+        path: "",
+        component: ClubsIdIndexPage
+      },
+      {
+        path: "edit",
+        component: ClubsIdEditPage
+      },
+      {
+        path: "members",
+        component: ClubsIdMembersIndexPage
+      },
+      {
+        path: "events/new",
+        component: ClubsIdEventsNewPage
+      },
+      {
+        path: "events/:event_id/edit",
+        component: ClubsIdEventsIdEditPage
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    routes
+  mode: "history",
+  routes
 });
 
 export default router;
