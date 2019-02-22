@@ -8,25 +8,39 @@
                 <div class="column is-4 is-offset-4">
                     <img src="{{ asset('img/logo.png') }}" width="96" height="96" />
                     <div class="box">
-                        <form action="/">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
                             <div class="field">
                                 <div class="control">
                                     <input
                                     class="input"
                                     type="email"
+                                    name="email"
+                                    value="{{ old('email') }}"
                                     placeholder="Email"
                                     autofocus
                                     />
                                 </div>
+                                @if ($errors->has('email'))
+                                <p class="help is-danger">
+                                    {{ $errors->first('email') }}
+                                </p>
+                                @endif
                             </div>
                             <div class="field">
                                 <div class="control">
                                     <input
                                     class="input"
                                     type="password"
+                                    name="password"
                                     placeholder="Password"
                                     />
                                 </div>
+                                @if ($errors->has('password'))
+                                <p class="help is-danger">
+                                    {{ $errors->first('password') }}
+                                </p>
+                                @endif
                             </div>
                             <div class="field">
                                 <label class="checkbox">
