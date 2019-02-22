@@ -44,7 +44,12 @@
                             </div>
                             <div class="field">
                                 <label class="checkbox">
-                                    <input type="checkbox" />
+                                    <input
+                                    type="checkbox"
+                                    name="remember"
+                                    value="true"
+                                    {{ old('remember') ? 'checked' : '' }}
+                                    />
                                     ログイン状態を記憶する
                                 </label>
                             </div>
