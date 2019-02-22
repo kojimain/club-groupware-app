@@ -137,5 +137,9 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'お名前(ニックネーム)',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード'
+    ],
 ];

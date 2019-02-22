@@ -34,7 +34,9 @@
                 プロフィール編集
               </router-link>
               <hr class="navbar-divider" />
-              <a href="/login" class="navbar-item">
+              <a
+                class="navbar-item"
+                @click="logout">
                 ログアウト
               </a>
             </div>
@@ -55,6 +57,22 @@ export default {
   methods: {
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
+    },
+    logout() {
+      // /logout へPOSTするフォームエレメントを作ってsubmitする
+
+      // <form>
+      const logoutForm = document.createElement("form");
+      logoutForm.method = "POST";
+      logoutForm.action = "/logout";
+      document.body.appendChild(logoutForm);
+      // CSRFトークンの<input>
+      const csrfTokenInput = document.createElement("input");
+      csrfTokenInput.name = "_token";
+      csrfTokenInput.value = document.head.querySelector('meta[name="csrf-token"]').content;
+      logoutForm.appendChild(csrfTokenInput);
+      // POST実行
+      logoutForm.submit();
     }
   }
 };

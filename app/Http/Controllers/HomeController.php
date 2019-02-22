@@ -13,8 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // TODO: 認証実装時にコメント解除
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**

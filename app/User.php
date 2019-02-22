@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * api_tokenの値を更新
+     *
+     * @return void
+     */
+    public function refleshApiToken() {
+        $this
+            ->forceFill(['api_token' => base64_encode(random_bytes(100))])
+            ->save();
+    }
 }
