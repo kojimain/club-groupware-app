@@ -15,7 +15,7 @@ class ForgotPasswordTest extends TestCase
      */
     public function test_ページが表示される()
     {
-        $response = $this->get('/forget');
+        $response = $this->get('/password/reset');
 
         $response->assertStatus(200);
     }
