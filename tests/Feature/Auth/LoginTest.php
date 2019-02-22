@@ -76,4 +76,27 @@ class LoginTest extends TestCase
         # api_tokenがセットされている
         $this->assertNotNull($user->api_token);
     }
+
+    /**
+     * POST /logout
+     *
+     * App\Http\Controllers\Auth\LoginController@logout
+     *
+     * @return void
+     */
+    public function test_logout() {
+        // ログインする
+        $plainPassword = 'p4ssw0rd';
+        $user = factory(User::class)->create([
+            'email' => 'testlogin@example.com',
+            'password' => bcrypt($plainPassword)
+        ]);
+        $this->actingAs($user);
+
+        // ログアウト
+        $this->post('/logout');
+
+        // ログアウトされている
+        $this->assertGuest();
+    }
 }
