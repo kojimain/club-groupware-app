@@ -49,13 +49,13 @@ class LoginTest extends TestCase
     }
 
     /**
-     * POST /login
+     * POST /login 「ログイン状態を記憶する」チェックOFFのとき
      *
      * App\Http\Controllers\Auth\LoginController@login
      *
      * @return void
      */
-    public function test_login() {
+    public function test_login_whenRememberIsNotChecked() {
         # ログインする
         $plainPassword = 'p4ssw0rd';
         $user = factory(User::class)->create([
@@ -75,6 +75,42 @@ class LoginTest extends TestCase
         $user = User::first();
         # api_tokenがセットされている
         $this->assertNotNull($user->api_token);
+    }
+
+    /**
+     * POST /login 「ログイン状態を記憶する」チェックONのとき
+     *
+     * App\Http\Controllers\Auth\LoginController@login
+     *
+     * @return void
+     */
+    public function test_login_whenRememberIsChecked() {
+        # ログインする
+        $plainPassword = 'p4ssw0rd';
+        $user = factory(User::class)->create([
+            'email' => 'testlogin@example.com',
+            'password' => bcrypt($plainPassword)
+        ]);
+
+        # POST
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => $plainPassword,
+            'remember' => 'true'
+        ]);
+
+        // 認証されている
+        $this->assertAuthenticatedAs($user);
+
+        $user = User::first();
+        # api_tokenがセットされている
+        $this->assertNotNull($user->api_token);
+        # remember_tokenがセットされている
+        $this->assertNotNull($user->remember_token);
+
+        # セッション失効後も認証されている
+        session()->flush();
+        $this->assertAuthenticatedAs($user);
     }
 
     /**
