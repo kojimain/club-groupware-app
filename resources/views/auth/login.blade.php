@@ -61,9 +61,9 @@
                     <p class="has-text-grey">
                         <a href="/register">新規登録</a>
                     </p>
-                    <p class="has-text-grey">
+                    {{-- <p class="has-text-grey">
                         <a href="/password/reset">パスワードをお忘れの方</a>
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <main>
@@ -49,4 +49,4 @@
         </div>
     </div>
 </footer>
-@endsection
+@endsection --}}
