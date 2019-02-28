@@ -74,7 +74,7 @@
     <div class="container">
         <div class="content has-text-centered">
             <p>
-                (c) 2019 ClubGroupware(仮)
+                (c) 2019 {{ env('APP_NAME') }}
             </p>
         </div>
     </div>

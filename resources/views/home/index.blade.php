@@ -4,6 +4,7 @@
 <div id="app"></div>
 <script>
     window.Laravel = {!! json_encode([
+        'appName' => env('APP_NAME'),
         'apiToken' => Auth::user()->api_token ?? null
     ]) !!};
 </script>

@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
           <img src="/img/logo.png" />
-          <span>ClubGroupware(仮)</span>
+          <span>{{ appName }}</span>
         </router-link>
         <span
           class="navbar-burger burger"
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import variables from "@/variables";
 import Flash from "./Header/Flash";
 
 export default {
@@ -57,6 +58,7 @@ export default {
   },
   data() {
     return {
+      appName: variables.appName,
       isMenuActive: false
     };
   },
