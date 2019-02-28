@@ -2,10 +2,6 @@
   <div class="container">
     <section class="section">
       <h2 class="subtitle">プロフィール編集</h2>
-      <Notification
-        v-if="notification.text"
-        :type="notification.type"
-        :text="notification.text"/>
       <div class="box">
         <form @submit.prevent="updateProfile">
           <div class="field">
@@ -51,21 +47,15 @@
 </template>
 
 <script>
-import Notification from "@/components/Notification";
 import FieldNotification from "@/components/FieldNotification";
 
 export default {
   components: {
-    Notification,
     FieldNotification
   },
   data() {
     return {
       profile: {},
-      notification: {
-        type: null,
-        text: null
-      },
       errors: {
         name: null,
         email: null
@@ -94,16 +84,11 @@ export default {
           email: this.profile.email
         })
         .then(response => {
-          this.notification = {
-            type: 'primary',
-            text: '更新しました'
-          };
+          this.$store.commit('flash/setSuccess', '更新しました');
         })
         .catch(error => {
-          this.notification = {
-            type: 'danger',
-            text: error.response.status === 422 ? '更新できませんでした' : '通信エラーが発生しました'
-          };
+          const errorMessage = error.response.status === 422 ? '更新できませんでした' : '通信エラーが発生しました';
+          this.$store.commit('flash/setError', errorMessage);
           this.errors = {
             name: (error.response.data.errors.name || [])[0],
             email: (error.response.data.errors.email || [])[0]
@@ -111,10 +96,7 @@ export default {
         });
     },
     flushNotifications() {
-      this.notification = {
-        type: null,
-        text: null
-      };
+      this.$store.commit('flash/clear');
       this.errors = {
         name: null,
         email: null

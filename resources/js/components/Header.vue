@@ -44,11 +44,17 @@
         </div>
       </div>
     </nav>
+    <Flash class="flash"/>
   </header>
 </template>
 
 <script>
+import Flash from "./Header/Flash";
+
 export default {
+  components: {
+    Flash
+  },
   data() {
     return {
       isMenuActive: false
@@ -81,5 +87,11 @@ export default {
 <style scoped>
 header {
   margin-bottom: 60px;
+}
+.flash {
+  position: fixed;
+  top: 52px;
+  width: 100%;
+  z-index: 30;
 }
 </style>
