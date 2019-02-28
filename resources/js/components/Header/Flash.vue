@@ -16,6 +16,9 @@ export default {
     message() {
       return this.$store.state.flash.message;
     }
+  },
+  mounted() {
+    this.$store.commit("flash/clear");
   }
 }
 </script>
