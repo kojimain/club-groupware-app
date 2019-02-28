@@ -47,4 +47,20 @@ class User extends Authenticatable
             ->forceFill(['api_token' => base64_encode(random_bytes(100))])
             ->save();
     }
+
+    /**
+     * has many members
+     */
+    public function members() {
+        return $this->hasMany('App\Member');
+    }
+
+    /**
+     * belongs to many clubs
+     */
+    public function clubs() {
+        return $this
+            ->belongsToMany('App\Club', 'members')
+            ->withTimestamps();
+    }
 }

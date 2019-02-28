@@ -24,7 +24,7 @@ class CreateMembersTable extends Migration
                 ->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
             $table->unique(['club_id', 'user_id'], 'club_user_index');
-            $table->string('role_type');
+            $table->integer('role_type');
             $table->timestamps();
         });
     }
