@@ -43,8 +43,8 @@
           </div>
         </div>
       </div>
+      <Flash class="flash"/>
     </nav>
-    <Flash class="flash"/>
   </header>
 </template>
 
@@ -92,6 +92,5 @@ header {
   position: fixed;
   top: 52px;
   width: 100%;
-  z-index: 30;
 }
 </style>
