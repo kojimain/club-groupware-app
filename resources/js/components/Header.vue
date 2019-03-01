@@ -23,7 +23,41 @@
           'is-active': isMenuActive
         }"
       >
-        <slot name="navbar-start"></slot>
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <router-link
+              :to="currentClub ? `/clubs/${currentClub.id}` : '/'"
+              class="navbar-link">
+              {{ currentClub ? currentClub.name : 'クラブ選択' }}
+            </router-link>
+            <div class="navbar-dropdown">
+              <router-link
+                v-for="club in clubs"
+                :key="club.id"
+                :to="`/clubs/${club.id}`"
+                class="navbar-item"
+                :class="{'is-active': currentClub === club}">
+                {{ club.name }}
+              </router-link>
+              <router-link to="/clubs/new" class="navbar-item">
+                新規クラブ作成
+              </router-link>
+              <div v-if="currentClub">
+                <hr class="navbar-divider" />
+                <router-link
+                  :to="`/clubs/${currentClub.id}/members`"
+                  class="navbar-item">
+                  メンバー一覧
+                </router-link>
+                <router-link
+                  :to="`/clubs/${currentClub.id}/edit`"
+                  class="navbar-item">
+                  クラブ編集
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -59,8 +93,18 @@ export default {
   data() {
     return {
       appName: variables.appName,
-      isMenuActive: false
+      isMenuActive: false,
+      clubs: [
+        { id: 123, name: 'サンプルクラブ1' },
+        { id: 456, name: 'サンプルクラブ2' },
+        { id: 789, name: 'サンプルクラブ3' }
+      ]
     };
+  },
+  computed: {
+    currentClub() {
+      return this.clubs.find(club => { return `${club.id}` === this.$route.params.club_id; });
+    }
   },
   methods: {
     toggleMenu() {

@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 import AppLayout from "./layouts/app";
 import IndexPage from "./pages/index";
-import ClubsIdLayout from "./layouts/clubs/_id";
 import ClubsIdIndexPage from "./pages/clubs/_id/index";
 import EditPage from "./pages/edit";
 import ClubsIdEditPage from "./pages/clubs/_id/edit";
@@ -30,31 +29,25 @@ const routes = [
       {
         path: "clubs/new",
         component: ClubsNewPage
-      }
-    ]
-  },
-  {
-    path: "/clubs/:club_id",
-    component: ClubsIdLayout,
-    children: [
+      },
       {
-        path: "",
+        path: "clubs/:club_id/",
         component: ClubsIdIndexPage
       },
       {
-        path: "edit",
+        path: "clubs/:club_id/edit",
         component: ClubsIdEditPage
       },
       {
-        path: "members",
+        path: "clubs/:club_id/members",
         component: ClubsIdMembersIndexPage
       },
       {
-        path: "events/new",
+        path: "clubs/:club_id/events/new",
         component: ClubsIdEventsNewPage
       },
       {
-        path: "events/:event_id/edit",
+        path: "clubs/:club_id/events/:event_id/edit",
         component: ClubsIdEventsIdEditPage
       }
     ]
