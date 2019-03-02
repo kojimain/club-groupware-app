@@ -15,24 +15,6 @@
               />
             </p>
           </div>
-          <div class="field">
-            <p class="control">
-              <label class="label">メンバー</label>
-              <Multiselect
-                v-model="selectedFriends"
-                :options="friends"
-                label="name"
-                track-by="id"
-                open-direction="bottom"
-                :close-on-select="false"
-                :show-labels="false"
-                placeholder=""
-                multiple
-              >
-                <span slot="noResult">(該当なし)</span>
-              </Multiselect>
-            </p>
-          </div>
           <hr />
           <div class="field is-grouped">
             <div class="control">
@@ -44,41 +26,3 @@
     </section>
   </div>
 </template>
-
-<script>
-import Multiselect from "vue-multiselect";
-import "vue-multiselect/dist/vue-multiselect.min.css";
-
-export default {
-  components: {
-    Multiselect
-  },
-  data() {
-    return {
-      friends: [
-        { id: 1, name: "サンプルフレンド1" },
-        { id: 2, name: "サンプルフレンド2" },
-        { id: 3, name: "サンプルフレンド3" },
-        { id: 4, name: "サンプルフレンド4" },
-        { id: 5, name: "サンプルフレンド5" },
-        { id: 6, name: "サンプルフレンド6" }
-      ],
-      selectedFriendIds: [2, 3]
-    };
-  },
-  computed: {
-    selectedFriends: {
-      get() {
-        return this.friends.filter(friend => {
-          return this.selectedFriendIds.includes(friend.id);
-        });
-      },
-      set(friends) {
-        this.selectedFriendIds = friends.map(friend => {
-          return friend.id;
-        });
-      }
-    }
-  }
-};
-</script>
