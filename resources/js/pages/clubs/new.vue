@@ -19,10 +19,11 @@
             <p class="control">
               <label class="label">メンバー</label>
               <Multiselect
-                v-model="selectedMembers"
-                :options="members"
+                v-model="selectedFriends"
+                :options="friends"
                 label="name"
                 track-by="id"
+                open-direction="bottom"
                 :close-on-select="false"
                 :show-labels="false"
                 placeholder=""
@@ -54,24 +55,27 @@ export default {
   },
   data() {
     return {
-      members: [
-        { id: 2, name: "サンプルメンバー2" },
-        { id: 3, name: "サンプルメンバー3" },
-        { id: 4, name: "サンプルメンバー4" }
+      friends: [
+        { id: 1, name: "サンプルフレンド1" },
+        { id: 2, name: "サンプルフレンド2" },
+        { id: 3, name: "サンプルフレンド3" },
+        { id: 4, name: "サンプルフレンド4" },
+        { id: 5, name: "サンプルフレンド5" },
+        { id: 6, name: "サンプルフレンド6" }
       ],
-      selectedMemberIds: [2, 3]
+      selectedFriendIds: []
     };
   },
   computed: {
-    selectedMembers: {
+    selectedFriends: {
       get() {
-        return this.members.filter(member => {
-          return this.selectedMemberIds.includes(member.id);
+        return this.friends.filter(friend => {
+          return this.selectedFriendIds.includes(friend.id);
         });
       },
-      set(members) {
-        this.selectedMemberIds = members.map(member => {
-          return member.id;
+      set(friends) {
+        this.selectedFriendIds = friends.map(friend => {
+          return friend.id;
         });
       }
     }
