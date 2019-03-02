@@ -67,6 +67,9 @@
               <router-link to="/edit" class="navbar-item">
                 プロフィール編集
               </router-link>
+              <router-link to="/friends" class="navbar-item">
+                フレンド一覧
+              </router-link>
               <hr class="navbar-divider" />
               <a
                 class="navbar-item"

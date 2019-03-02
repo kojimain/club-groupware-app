@@ -6,43 +6,8 @@
           <h2 class="subtitle">メンバー一覧</h2>
           <!-- invite -->
           <div class="buttons is-pulled-right">
-            <a class="button is-primary" @click="showInvitationModal = true">
-              <span class="icon is-medium">
-                <i class="fas fa-envelope"></i>
-              </span>
-              <span>招待</span>
-            </a>
+            <InvitationButton />
           </div>
-          <Modal
-            :class="{ 'is-active': showInvitationModal }"
-            @close="showInvitationModal = false"
-          >
-            <div slot="modal-content">
-              <div class="box is-clearfix">
-                <h3 class="subtitle">招待する</h3>
-                <p class="content">
-                  入力したメールアドレス宛に招待メールを送信します。
-                </p>
-                <form>
-                  <div class="field">
-                    <p class="control">
-                      <input
-                        class="input"
-                        type="email"
-                        value=""
-                        placeholder="Email"
-                      />
-                    </p>
-                  </div>
-                  <div class="field is-grouped is-pulled-right">
-                    <div class="control">
-                      <button class="button is-primary">送信</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </Modal>
           <!-- search -->
           <div class="content">
             <div class="control has-icons-left">
@@ -84,11 +49,11 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal";
+import InvitationButton from "./index/InvitationButton";
 
 export default {
   components: {
-    Modal
+    InvitationButton
   },
   data() {
     return {
@@ -99,8 +64,7 @@ export default {
         { id: 2, name: "サンプルメンバー2" },
         { id: 1, name: "サンプルメンバー1" }
       ],
-      query: "",
-      showInvitationModal: false
+      query: ""
     };
   },
   computed: {
