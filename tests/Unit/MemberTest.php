@@ -6,11 +6,26 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
+use App\Member;
 
 class MemberTest extends TestCase
 {
     public function tearDown() {
         Mockery::close();
+    }
+
+
+    /**
+     * const ROLE_TYPE
+     */
+    public function test_const_ROLE_TYPE() {
+        $this->assertEquals(
+            Member::ROLE_TYPE,
+            [
+                'member'        => 1,
+                'manager'       => 2
+            ]
+        );
     }
 
     /**

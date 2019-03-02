@@ -16,6 +16,14 @@ class Member extends Model
     ];
 
     /**
+     * ROLE_TYPE
+     */
+    const ROLE_TYPE = [
+        'member'        => 1,
+        'manager'       => 2
+    ];
+
+    /**
      * belongs to club
      */
     public function club() {
