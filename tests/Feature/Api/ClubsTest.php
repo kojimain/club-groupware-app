@@ -250,4 +250,45 @@ class ClubsTest extends TestCase
             [422, ['name' => str_repeat('n', 256)]],
         ];
     }
+
+    /**
+     * GET /api/clubs/{club}
+     *
+     * App\Http\Controllers\Api\ClubsController@show
+     */
+    public function test_show()
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // club用意
+        $club = factory(Club::class)->make([
+            'name' => 'clubnamebeforechange'
+        ]);
+        $user->clubs()->save(
+            $club,
+            [
+                'role_type' => Member::ROLE_TYPE['manager']
+            ]
+        );
+
+        // GET送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('GET', '/api/clubs/'.$club->id);
+
+        // 200が返る
+        $response->assertStatus(200);
+
+        // 所定のJSONが返る
+        $response->assertExactJson([
+            'id' => $club->id,
+            'name' => $club->name,
+            'created_at' => $club->created_at->toDateTimeString(),
+            'updated_at' => $club->updated_at->toDateTimeString(),
+        ]);
+    }
 }

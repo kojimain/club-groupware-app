@@ -90,4 +90,15 @@ class ClubsController extends Controller
         // 結果返却
         return $club;
     }
+
+    /**
+     * GET /api/clubs/{club}
+     *
+     * club表示
+     */
+    public function show(Request $request)
+    {
+        $user = $request->user();
+        return $user->clubs()->findOrFail($request->club);
+    }
 }

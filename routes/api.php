@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth:api']], function() {
             'store',
             'index',
             'update',
+            'show',
         ]
     ]);
 });
