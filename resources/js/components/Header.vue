@@ -97,12 +97,16 @@ export default {
     return {
       appName: variables.appName,
       isMenuActive: false,
-      clubs: [
-        { id: 123, name: 'サンプルクラブ1' },
-        { id: 456, name: 'サンプルクラブ2' },
-        { id: 789, name: 'サンプルクラブ3' }
-      ]
+      clubs: []
     };
+  },
+  mounted() {
+    this.fetchClubs();
+  },
+  watch: {
+    '$route'() {
+      this.fetchClubs();
+    }
   },
   computed: {
     currentClub() {
@@ -110,6 +114,12 @@ export default {
     }
   },
   methods: {
+    fetchClubs() {
+      axios.get('/api/clubs')
+        .then(response => {
+          this.clubs = response.data.sort((a, b) => { return a.id - b.id; });
+        });
+    },
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },

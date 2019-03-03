@@ -33,7 +33,7 @@
           <div class="content">
             <div class="columns is-centered is-multiline">
               <div v-for="club in clubs" :key="club.id" class="column is-4">
-                <router-link to="/clubs/123">
+                <router-link :to="`/clubs/${club.id}`">
                   <div class="card">
                     <div class="card-content">
                       {{ club.name }}
@@ -54,12 +54,19 @@
 export default {
   data() {
     return {
-      clubs: [
-        { id: 1, name: "サンプルクラブ1" },
-        { id: 2, name: "サンプルクラブ2" },
-        { id: 3, name: "サンプルクラブ3" }
-      ]
+      clubs: []
     };
+  },
+  mounted() {
+    this.fetchClubs();
+  },
+  methods: {
+    fetchClubs() {
+      axios.get('/api/clubs')
+        .then(response => {
+          this.clubs = response.data.sort((a, b) => { return a.id - b.id; });
+        });
+    }
   }
 };
 </script>

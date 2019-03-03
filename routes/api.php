@@ -16,4 +16,13 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/profile', 'Api\ProfileController@show');
     Route::post('/profile', 'Api\ProfileController@update');
+    Route::resource('clubs', 'Api\ClubsController', [
+        'only' => [
+            'store',
+            'index',
+            'update',
+            'show',
+            'destroy',
+        ]
+    ]);
 });
