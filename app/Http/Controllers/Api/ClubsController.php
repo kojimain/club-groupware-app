@@ -60,4 +60,34 @@ class ClubsController extends Controller
         // 200の結果返却
         return $club;
     }
+
+    /**
+     * PUT|PATCH /api/clubs
+     *
+     * club更新
+     */
+    public function update(Request $request)
+    {
+        // バリデーション
+        $this->validate($request,
+            [
+                'name' => 'required|max:255'
+            ],
+            [],
+            [
+                'name' => 'クラブ名'
+            ]);
+
+        // UPDATE
+        $user = $request->user();
+        $club = $user->clubs()->findOrFail($request->club);
+        $club
+            ->fill([
+                'name' => $request->name
+            ])
+            ->save();
+
+        // 結果返却
+        return $club;
+    }
 }

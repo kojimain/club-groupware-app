@@ -16,6 +16,15 @@ class Club extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'pivot',
+    ];
+
+    /**
      * has many members
      */
     public function members() {

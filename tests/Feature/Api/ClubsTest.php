@@ -143,4 +143,111 @@ class ClubsTest extends TestCase
             [422, ['name' => str_repeat('n', 256)]],
         ];
     }
+
+    /**
+     * PUT/PATCH /api/clubs/{club} パラメータが正当なとき
+     *
+     * App\Http\Controllers\Api\ClubsController@update
+     *
+     * @dataProvider provideValidUpdateParams
+     */
+    public function test_update_whenValid($status, $params)
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // club用意
+        $clubwas = factory(Club::class)->make([
+            'name' => 'clubnamebeforechange'
+        ]);
+        $user->clubs()->save(
+            $clubwas,
+            [
+                'role_type' => Member::ROLE_TYPE['manager']
+            ]
+        );
+
+        // PATCH送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('PATCH', '/api/clubs/'.$clubwas->id, $params);
+        $club = $user->clubs()->first();
+
+        // 期待したHTTPステータスが返る
+        $response->assertStatus($status);
+
+        // 属性が更新されている
+        $this->assertEquals($params['name'], $club->name);
+
+        // 所定のJSONが返る
+        $response->assertExactJson([
+            'id' => $club->id,
+            'name' => $club->name,
+            'created_at' => $club->created_at->toDateTimeString(),
+            'updated_at' => $club->updated_at->toDateTimeString(),
+        ]);
+    }
+
+    /**
+     * dataProvider provideValidUpdateParams
+     */
+    public function provideValidUpdateParams()
+    {
+        return [
+            [200, ['name' => 'validname']],
+        ];
+    }
+
+    /**
+     * PUT/PATCH /api/clubs/{club} パラメータが不当なとき
+     *
+     * App\Http\Controllers\Api\ClubsController@update
+     *
+     * @dataProvider provideInvalidUpdateParams
+     */
+    public function test_update_whenInvalid($status, $params)
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // club用意
+        $clubwas = factory(Club::class)->make([
+            'name' => 'clubnamebeforechange'
+        ]);
+        $user->clubs()->save(
+            $clubwas,
+            [
+                'role_type' => Member::ROLE_TYPE['manager']
+            ]
+        );
+
+        // PATCH送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('PATCH', '/api/clubs/'.$clubwas->id, $params);
+        $club = $user->clubs()->first();
+
+        // 期待したHTTPステータスが返る
+        $response->assertStatus($status);
+
+        // 属性が更新されていない
+        $this->assertNotEquals($params['name'], $club->name);
+    }
+
+    /**
+     * dataProvider provideInvalidUpdateParams
+     */
+    public function provideInvalidUpdateParams()
+    {
+        return [
+            [422, ['name' => '']],
+            [422, ['name' => str_repeat('n', 256)]],
+        ];
+    }
 }
