@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('clubs', 'Api\ClubsController', [
         'only' => [
             'store',
+            'index',
         ]
     ]);
 });

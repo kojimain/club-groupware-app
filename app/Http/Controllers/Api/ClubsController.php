@@ -11,6 +11,17 @@ use App\Member;
 class ClubsController extends Controller
 {
     /**
+     * GET /api/clubs
+     *
+     * club一覧
+     */
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        return $user->clubs()->get();
+    }
+
+    /**
      * POST /api/clubs
      *
      * club作成

@@ -7,10 +7,47 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Member;
+use App\Club;
 
 class ClubsTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * GET /api/clubs
+     *
+     * App\Http\Controllers\Api\ClubsController@index
+     */
+    public function test_index()
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // memberのROLE_TYPEごとにclubとmemberを複数用意
+        foreach (Member::ROLE_TYPE as $role_type) {
+            $club = factory(Club::class)->make();
+            $user->clubs()->save(
+                $club,
+                [
+                    'role_type' => $role_type
+                ]
+            );
+        }
+
+        // GET送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('GET', '/api/clubs');
+
+        // 200が返る
+        $response->assertStatus(200);
+
+        // 所定のJSONが返る
+        $response->assertExactJson($user->clubs()->get()->toArray());
+    }
 
     /**
      * POST /api/clubs パラメータが正当なとき
