@@ -78,11 +78,7 @@ export default {
     },
     updateProfile() {
       this.flushNotifications();
-      axios
-        .post('/api/profile', {
-          name: this.profile.name,
-          email: this.profile.email
-        })
+      this.$store.dispatch('profile/update', this.profile)
         .then(response => {
           this.$store.commit('flash/setSuccess', '更新しました');
         })
