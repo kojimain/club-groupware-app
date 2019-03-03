@@ -61,7 +61,7 @@
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              サンプルメンバー1
+              {{ profile.name }}
             </a>
             <div class="navbar-dropdown">
               <router-link to="/edit" class="navbar-item">
@@ -101,6 +101,7 @@ export default {
     };
   },
   mounted() {
+    this.$store.dispatch('profile/fetch');
     this.fetchClubs();
   },
   watch: {
@@ -109,6 +110,9 @@ export default {
     }
   },
   computed: {
+    profile() {
+      return this.$store.state.profile;
+    },
     currentClub() {
       return this.clubs.find(club => { return `${club.id}` === this.$route.params.club_id; });
     }
@@ -151,5 +155,8 @@ header {
   position: fixed;
   top: 52px;
   width: 100%;
+}
+.navbar-end .navbar-item .navbar-link {
+  width: 160px;
 }
 </style>
