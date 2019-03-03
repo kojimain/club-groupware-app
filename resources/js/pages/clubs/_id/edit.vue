@@ -29,11 +29,25 @@
         </form>
       </div>
     </section>
+    <section class="section">
+      <h2 class="subtitle">削除</h2>
+      <div class="box is-clearfix">
+        <div class="buttons is-pulled-right">
+          <DeleteClubButton
+            :club="club"/>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import DeleteClubButton from "@/components/DeleteClubButton";
+
 export default {
+  components: {
+    DeleteClubButton
+  },
   data() {
     return {
       club: {
