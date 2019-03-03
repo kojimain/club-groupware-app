@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:api']], function() {
             'index',
             'update',
             'show',
+            'destroy',
         ]
     ]);
 });

@@ -101,4 +101,18 @@ class ClubsController extends Controller
         $user = $request->user();
         return $user->clubs()->findOrFail($request->club);
     }
+
+    /**
+     * DELETE /api/clubs/{club}
+     *
+     * club削除
+     */
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+        $club = $user->clubs()
+            ->wherePivot('role_type', Member::ROLE_TYPE['manager'])
+            ->findOrFail($request->club)
+            ->delete();
+    }
 }

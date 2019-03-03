@@ -291,4 +291,76 @@ class ClubsTest extends TestCase
             'updated_at' => $club->updated_at->toDateTimeString(),
         ]);
     }
+
+    /**
+     * DELETE /api/clubs/{club} クラブがユーザ管理下のとき
+     *
+     * App\Http\Controllers\Api\ClubsController@destroy
+     */
+    public function test_destroy_managedClub()
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // manager権限でclub用意
+        $club = factory(Club::class)->make([]);
+        $user->clubs()->save(
+            $club,
+            [
+                'role_type' => Member::ROLE_TYPE['manager']
+            ]
+        );
+
+        // DELETE送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('DELETE', '/api/clubs/'.$club->id);
+
+        // 200が返る
+        $response->assertStatus(200);
+
+        // clubが削除されている
+        $this->assertDatabaseMissing('clubs', []);
+        // memberが削除されている
+        $this->assertDatabaseMissing('members', []);
+    }
+
+    /**
+     * DELETE /api/clubs/{club} クラブがユーザ管理下でないとき
+     *
+     * App\Http\Controllers\Api\ClubsController@destroy
+     */
+    public function test_destroy_notManagedClub()
+    {
+        // user用意
+        $user = factory(User::class)->create();
+        $user->refleshApiToken();
+
+        // member権限でclub用意
+        $club = factory(Club::class)->make([]);
+        $user->clubs()->save(
+            $club,
+            [
+                'role_type' => Member::ROLE_TYPE['member']
+            ]
+        );
+
+        // DELETE送信
+        $response = $this
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$user->api_token
+            ])
+            ->json('DELETE', '/api/clubs/'.$club->id);
+
+        // 404が返る
+        $response->assertStatus(404);
+
+        // clubが削除されていない
+        $this->assertDatabaseHas('clubs', []);
+        // memberが削除されていない
+        $this->assertDatabaseHas('members', []);
+    }
 }
