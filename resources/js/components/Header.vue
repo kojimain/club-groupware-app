@@ -99,6 +99,11 @@ export default {
       isMenuActive: false,
     };
   },
+  watch: {
+    '$route'() {
+      this.isMenuActive = false;
+    }
+  },
   computed: {
     profile() {
       return this.$store.state.profile;
