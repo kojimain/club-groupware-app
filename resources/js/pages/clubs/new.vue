@@ -53,10 +53,7 @@ export default {
   methods: {
     submit() {
       this.flushNotifications();
-      axios
-        .post('/api/clubs', {
-          name: this.club.name
-        })
+      this.$store.dispatch('club/storeClub', this.club)
         .then(response => {
           this.$store.dispatch('flash/update', {type: 'is-primary', message: '作成しました'});
           const clubId = response.data.id;

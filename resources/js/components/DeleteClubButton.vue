@@ -22,7 +22,7 @@
             <div class="control">
               <button
                 class="button is-danger"
-                @click="deleteClub">
+                @click="destroyClub">
                 <span class="icon is-small">
                   <i class="fas fa-ban"></i>
                 </span>
@@ -62,8 +62,8 @@ export default {
     };
   },
   methods: {
-    deleteClub() {
-      axios.delete(`/api/clubs/${this.$route.params.club_id}`)
+    destroyClub() {
+      this.$store.dispatch('club/destroyClub', this.club)
         .then(response => {
           this.$store.dispatch('flash/update', {type: 'is-primary', message: '削除しました'});
           this.$router.push('/');
