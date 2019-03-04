@@ -97,33 +97,20 @@ export default {
     return {
       appName: variables.appName,
       isMenuActive: false,
-      clubs: []
     };
-  },
-  mounted() {
-    this.$store.dispatch('profile/fetch');
-    this.fetchClubs();
-  },
-  watch: {
-    '$route'() {
-      this.fetchClubs();
-    }
   },
   computed: {
     profile() {
       return this.$store.state.profile;
     },
+    clubs() {
+      return this.$store.state.club.clubs;
+    },
     currentClub() {
-      return this.clubs.find(club => { return `${club.id}` === this.$route.params.club_id; });
+      return this.$store.getters['club/findClubById'](parseInt(this.$route.params.club_id));
     }
   },
   methods: {
-    fetchClubs() {
-      axios.get('/api/clubs')
-        .then(response => {
-          this.clubs = response.data.sort((a, b) => { return a.id - b.id; });
-        });
-    },
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },

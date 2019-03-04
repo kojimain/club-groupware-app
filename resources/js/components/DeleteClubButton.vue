@@ -22,7 +22,7 @@
             <div class="control">
               <button
                 class="button is-danger"
-                @click="deleteClub">
+                @click="destroyClub">
                 <span class="icon is-small">
                   <i class="fas fa-ban"></i>
                 </span>
@@ -62,15 +62,14 @@ export default {
     };
   },
   methods: {
-    deleteClub() {
-      this.$store.commit('flash/clear');
-      axios.delete(`/api/clubs/${this.$route.params.club_id}`)
+    destroyClub() {
+      this.$store.dispatch('club/destroyClub', this.club)
         .then(response => {
-          this.$store.commit('flash/setSuccess', '削除しました');
+          this.$store.dispatch('flash/update', {type: 'is-primary', message: '削除しました'});
           this.$router.push('/');
         })
         .catch(error => {
-          this.$store.commit('flash/setError', '通信エラーが発生しました');
+          this.$store.dispatch('flash/update', {type: 'is-danger', message: '通信エラーが発生しました'});
         });
     }
   }

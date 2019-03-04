@@ -18,7 +18,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit("flash/clear");
+    this.$store.dispatch("flash/clear");
   }
 }
 </script>

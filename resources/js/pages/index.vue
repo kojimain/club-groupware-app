@@ -52,20 +52,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      clubs: []
-    };
-  },
-  mounted() {
-    this.fetchClubs();
-  },
-  methods: {
-    fetchClubs() {
-      axios.get('/api/clubs')
-        .then(response => {
-          this.clubs = response.data.sort((a, b) => { return a.id - b.id; });
-        });
+  computed: {
+    clubs() {
+      return this.$store.state.club.clubs;
     }
   }
 };

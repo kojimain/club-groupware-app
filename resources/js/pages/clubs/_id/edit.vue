@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div
+    v-if="club"
+    class="container">
     <section class="section">
       <h2 class="subtitle">クラブ編集</h2>
       <div class="box">
@@ -8,7 +10,7 @@
             <p class="control">
               <label class="label">クラブ名</label>
               <input
-                v-model="club.name"
+                v-model="clubForm.name"
                 class="input"
                 type="text"
                 value="サンプルクラブ1"
@@ -52,46 +54,36 @@ export default {
   },
   data() {
     return {
-      club: {
-        id: null,
-        name: null
-      },
       errors: {
         name: null
       }
     };
   },
-  mounted() {
-    this.fetchClub();
+  computed: {
+    club() {
+      return this.$store.getters['club/findClubById'](parseInt(this.$route.params.club_id));
+    },
+    clubForm() {
+      return Object.assign({}, this.club);
+    }
   },
   methods: {
-    fetchClub() {
-      axios.get(`/api/clubs/${this.$route.params.club_id}`)
-        .then(response => {
-          this.club = response.data;
-        });
-    },
     submit() {
       this.flushNotifications();
-      axios
-        .patch(`/api/clubs/${this.club.id}`, {
-          name: this.club.name
-        })
+      this.$store.dispatch('club/updateClub', this.clubForm)
         .then(response => {
-          this.$store.commit('flash/setSuccess', '更新しました');
+          this.$store.dispatch('flash/update', {type: 'is-primary', message: '更新しました'});
           const clubId = response.data.id;
-          this.$router.push(`/clubs/${clubId}`);
         })
         .catch(error => {
           const errorMessage = error.response.status === 422 ? '更新できませんでした' : '通信エラーが発生しました';
-          this.$store.commit('flash/setError', errorMessage);
+          this.$store.dispatch('flash/update', {type: 'is-danger', message: errorMessage});
           this.errors = {
             name: (error.response.data.errors.name || [])[0]
           };
         });
     },
     flushNotifications() {
-      this.$store.commit('flash/clear');
       this.errors = {
         name: null
       };
