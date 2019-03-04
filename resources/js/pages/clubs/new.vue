@@ -34,7 +34,12 @@
 </template>
 
 <script>
+import FieldNotification from "@/components/FieldNotification";
+
 export default {
+  components: {
+    FieldNotification
+  },
   data() {
     return {
       club: {

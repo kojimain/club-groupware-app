@@ -43,10 +43,12 @@
 
 <script>
 import DeleteClubButton from "@/components/DeleteClubButton";
+import FieldNotification from "@/components/FieldNotification";
 
 export default {
   components: {
-    DeleteClubButton
+    DeleteClubButton,
+    FieldNotification
   },
   data() {
     return {
