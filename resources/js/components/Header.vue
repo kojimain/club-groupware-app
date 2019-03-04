@@ -101,7 +101,6 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch('profile/fetch');
     this.fetchClubs();
   },
   watch: {

@@ -12,16 +12,20 @@ const mutations = {
   }
 };
 
+/**
+ * コンポーネントからはこちらを利用すること
+ * (mutationsは直接操作しない方針)
+ */
 const actions = {
   async fetch({ commit }) {
-    return await axios.get("/api/profile").then(response => {
-      commit("set", response.data);
-    });
+    const response = await axios.get("/api/profile");
+    commit("set", response.data);
+    return response;
   },
   async update({ commit }, profile) {
-    return await axios.post("/api/profile", profile).then(() => {
-      commit("set", profile);
-    });
+    const response = await axios.post("/api/profile", profile);
+    commit("set", profile);
+    return response;
   }
 };
 
