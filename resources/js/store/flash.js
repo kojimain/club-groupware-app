@@ -8,18 +8,29 @@ const mutations = {
     state.type = null;
     state.message = null;
   },
-  setSuccess(state, message) {
-    state.type = "is-primary";
-    state.message = message;
+  set(state, payload) {
+    state.type = payload.type;
+    state.message = payload.message;
+  }
+};
+
+/**
+ * コンポーネントからはこちらを利用すること
+ * (mutationsは直接操作しない方針)
+ */
+const actions = {
+  clear({ commit }) {
+    commit("clear");
   },
-  setError(state, message) {
-    state.type = "is-danger";
-    state.message = message;
+  async update({ commit, dispatch }, payload) {
+    await dispatch("clear");
+    commit("set", payload);
   }
 };
 
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  actions
 };

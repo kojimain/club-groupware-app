@@ -80,11 +80,11 @@ export default {
       this.flushNotifications();
       this.$store.dispatch('profile/update', this.profile)
         .then(response => {
-          this.$store.commit('flash/setSuccess', '更新しました');
+          this.$store.dispatch('flash/update', {type: 'is-primary', message: '更新しました'});
         })
         .catch(error => {
           const errorMessage = error.response.status === 422 ? '更新できませんでした' : '通信エラーが発生しました';
-          this.$store.commit('flash/setError', errorMessage);
+          this.$store.dispatch('flash/update', {type: 'is-danger', message: errorMessage});
           this.errors = {
             name: (error.response.data.errors.name || [])[0],
             email: (error.response.data.errors.email || [])[0]
@@ -92,7 +92,6 @@ export default {
         });
     },
     flushNotifications() {
-      this.$store.commit('flash/clear');
       this.errors = {
         name: null,
         email: null

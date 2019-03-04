@@ -58,20 +58,19 @@ export default {
           name: this.club.name
         })
         .then(response => {
-          this.$store.commit('flash/setSuccess', '作成しました');
+          this.$store.dispatch('flash/update', {type: 'is-primary', message: '作成しました'});
           const clubId = response.data.id;
           this.$router.push(`/clubs/${clubId}`);
         })
         .catch(error => {
           const errorMessage = error.response.status === 422 ? '作成できませんでした' : '通信エラーが発生しました';
-          this.$store.commit('flash/setError', errorMessage);
+          this.$store.dispatch('flash/update', {type: 'is-danger', message: errorMessage});
           this.errors = {
             name: (error.response.data.errors.name || [])[0]
           };
         });
     },
     flushNotifications() {
-      this.$store.commit('flash/clear');
       this.errors = {
         name: null
       };

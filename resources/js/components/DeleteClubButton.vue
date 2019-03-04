@@ -63,14 +63,13 @@ export default {
   },
   methods: {
     deleteClub() {
-      this.$store.commit('flash/clear');
       axios.delete(`/api/clubs/${this.$route.params.club_id}`)
         .then(response => {
-          this.$store.commit('flash/setSuccess', '削除しました');
+          this.$store.dispatch('flash/update', {type: 'is-primary', message: '削除しました'});
           this.$router.push('/');
         })
         .catch(error => {
-          this.$store.commit('flash/setError', '通信エラーが発生しました');
+          this.$store.dispatch('flash/update', {type: 'is-danger', message: '通信エラーが発生しました'});
         });
     }
   }
